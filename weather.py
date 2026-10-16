@@ -3,18 +3,30 @@ import requests
 import pandas as pd
 
 # 1. Define the live API endpoint with coordinates
-url = "https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=60.10&lon=24.75"
+url = "https://api.met.no/weatherapi/locationforecast/2.0/compact"
 
-# 2. Add an explicit, valid User-Agent identifier to prevent 403 Forbidden errors
+# 2. Move coordinates into a clean parameters dictionary
+params = {
+    "lat": 60.10,
+    "lon": 24.75
+}
+
+# 3. Add Accept (file type) and User-Agent identifiers to your headers
 headers = {
-    "User-Agent": "WeatherAnalyticsDataApp/2.0 (research_analytics@domain.com)"
+    "User-Agent": "WeatherAnalyticsDataApp/2.0 (research_analytics@domain.com)",
+    "Accept": "application/geo+json"  # Tells the server you expect JSON back
 }
 
 try:
     # 3. Make the API request
     print("Fetching live data from Met.no API...")
-    response = requests.get(url, headers=headers)
+    response = requests.get(url, headers=headers, params=params)
     response.raise_for_status() 
+    #print(response.headers)
+    #print(response.json())
+    #with open("data.json", "w", encoding="utf-8") as file:
+    # Option A: Save the raw Python dictionary/list directly
+        #json.dump(response.json(), file, indent=4)
     
     # 4. Load the API text response directly into a JSON dictionary
     raw_payload = response.json()
