@@ -56,7 +56,8 @@ try:
     df["Timestamp"] = df["Timestamp"].dt.tz_convert(None) # Removes 'Z' and leaves a clean local runtime index
     
     # Format into a clean, standard layout: YYYY-MM-DD HH:MM
-    df["Timestamp"] = df["Timestamp"].dt.strftime("%Y-%m-%d %H:%M")
+    #df["Timestamp"] = df["Timestamp"].dt.strftime("%Y-%m-%d %H:%M")
+    df["Timestamp"] = df["Timestamp"].dt.strftime("%H:%M %d-%m-%Y")  # Custom format: HH:MM DD-MM-YYYY
     
     # View the top records
     print("\nSuccessfully processed data frame:")
